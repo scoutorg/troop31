@@ -20,7 +20,7 @@ The Chemex Coffeemaker consists of an hourglass-shaped glass flask with a conica
 3. Never skip preheating the glass.
 4. Timing is key, don’t forget the clock.
 
-If you do it right, everyone will thing you are a superhero.
+If you do it right, everyone will think you are a superhero.
 
 ![Superhero](/img/Superhero-icon.png)
 
