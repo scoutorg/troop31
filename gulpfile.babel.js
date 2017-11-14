@@ -10,17 +10,40 @@ import webpackConfig from "./webpack.conf";
 import svgstore from "gulp-svgstore";
 import svgmin from "gulp-svgmin";
 import inject from "gulp-inject";
-import replace from "gulp-replace";
 import cssnano from "cssnano";
+import Assets from "gulp-asset-hash";
+import del from "del";
+import template from "gulp-template";
+
+// import replace from "gulp-replace";
 
 const browserSync = BrowserSync.create();
 const hugoBin = `./bin/hugo.${process.platform === "win32" ? "exe" : process.platform}`;
 const defaultArgs = ["-d", "../dist", "-s", "site"];
 
-gulp.task("hugo", (cb) => buildSite(cb));
-gulp.task("hugo-preview", (cb) => buildSite(cb, ["--buildDrafts", "--buildFuture"]));
-gulp.task("build", ["css", "js", "cms-assets", "hugo"]);
-gulp.task("build-preview", ["css", "js", "cms-assets", "hugo-preview"]);
+gulp.task("clean", (cb) => {
+  del([
+    "dist",
+    "site/data/assetManifest.json",
+    "site/data/manifest.json"
+  ], {
+    dot: true
+  }, cb);
+});
+
+gulp.task("hugo", ["css", "js", "cms-assets"], (cb) => buildSite(cb));
+gulp.task("hugo-preview", ["css", "js", "cms-assets"], (cb) => buildSite(cb, ["--buildDrafts", "--buildFuture"]));
+gulp.task("build", ["css", "js", "cms-assets", "hugo", "headers"]);
+gulp.task("build-preview", ["css", "js", "cms-assets", "hugo-preview", "headers"]);
+
+gulp.task("headers", ["css", "js", "cms-assets"], (cb) => {
+  var manifest = require("./site/data/manifest.json");
+  var assetManifest = require("./site/data/assetManifest.json");
+
+  return gulp.src("src/_headers")
+    .pipe(template({manifest: manifest, assetManifest: assetManifest}))
+    .pipe(gulp.dest("dist"));
+});
 
 gulp.task("css", () => (
   gulp.src("./src/css/*.css")
@@ -29,6 +52,11 @@ gulp.task("css", () => (
       cssnext(),
       cssnano(),
     ]))
+    .pipe(Assets.hash({
+      manifest: "site/data/assetManifest.json",
+      hashKey: "7h4e",
+      hasher: "md5"
+    }))
     .pipe(gulp.dest("./dist/css"))
     .pipe(browserSync.stream())
 ));
@@ -36,17 +64,14 @@ gulp.task("css", () => (
 gulp.task("cms-assets", () => (
   gulp.src("./node_modules/netlify-cms/dist/*.{woff,eot,woff2,ttf,svg,png}")
     .pipe(gulp.dest("./dist/css"))
-))
+));
 
 gulp.task("js", (cb) => {
   const myConfig = Object.assign({}, webpackConfig);
 
   webpack(myConfig, (err, stats) => {
-    if (err) throw new gutil.PluginError("webpack", err);
-    gutil.log("[webpack]", stats.toString({
-      colors: true,
-      progress: true
-    }));
+    if (err) { throw new gutil.PluginError("webpack", err); }
+    gutil.log("[webpack]", stats.toString({colors: true, progress: true}));
     browserSync.reload();
     cb();
   });
