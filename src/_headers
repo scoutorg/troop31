@@ -11,10 +11,10 @@
   Link: /css/main-<%= assetManifest["src/css/main.css"].hash %>.css; rel=preload; as=style
 
 /css/*
-  Cache-Control: public, max-age=31536000
+  Cache-Control: public, max-age=31536000, immutable
 
 /cms-*.js
-  Cache-Control: public, max-age=31536000
+  Cache-Control: public, max-age=31536000, immutable
 
 /app-*.js
-  Cache-Control: public, max-age=31536000
+  Cache-Control: public, max-age=31536000, immutable
