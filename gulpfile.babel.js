@@ -32,6 +32,7 @@ gulp.task("clean", (cb) => {
 });
 
 gulp.task("hugo", ["css", "js", "cms-assets"], (cb) => buildSite(cb));
+gulp.task("hugo-rebuild", (cb) => buildSite(cb));
 gulp.task("hugo-preview", ["css", "js", "cms-assets"], (cb) => buildSite(cb, ["--buildDrafts", "--buildFuture"]));
 gulp.task("build", ["css", "js", "cms-assets", "hugo", "headers"]);
 gulp.task("build-preview", ["css", "js", "cms-assets", "hugo-preview", "headers"]);
@@ -104,9 +105,9 @@ gulp.task("server", ["hugo", "css", "cms-assets", "js", "svg"], () => {
     }
   });
   gulp.watch("./src/js/**/*.js", ["js"]);
-  gulp.watch("./src/css/**/*.css", ["css"]);
+  gulp.watch("./src/css/**/*.css", ["css", "cms-assets"]);
   gulp.watch("./site/static/img/icons/*.svg", ["svg"]);
-  gulp.watch("./site/**/*", ["hugo"]);
+  gulp.watch("./site/**/*", ["hugo-rebuild"]);
 });
 
 function buildSite(cb, options) {
