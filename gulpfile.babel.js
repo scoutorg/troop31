@@ -64,7 +64,7 @@ function string_src(filename, string) {
   return src;
 }
 
-gulp.task("assets", () => {
+gulp.task("assets", ["images", "css", "js", "cms-assets"], () => {
   var manifest = require("./site/data/manifest.json");
   var assetManifest = require("./site/data/assetManifest.json");
 
