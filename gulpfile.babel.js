@@ -41,7 +41,11 @@ gulp.task("headers", ["css", "js", "cms-assets"], (cb) => {
   var assetManifest = require("./site/data/assetManifest.json");
 
   return gulp.src("src/_headers")
-    .pipe(template({manifest: manifest, assetManifest: assetManifest}))
+    .pipe(template({
+      now: (new Date()).toGMTString(),
+      manifest: manifest,
+      assetManifest: assetManifest
+    }))
     .pipe(gulp.dest("dist"));
 });
 

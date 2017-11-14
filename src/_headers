@@ -12,9 +12,12 @@
 
 /css/*
   Cache-Control: public, max-age=31536000, immutable
+  Last-Modified: <%= now %>
 
 /cms-*.js
   Cache-Control: public, max-age=31536000, immutable
+  Last-Modified: <%= now %>
 
 /app-*.js
   Cache-Control: public, max-age=31536000, immutable
+  Last-Modified: <%= now %>
