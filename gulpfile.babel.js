@@ -14,6 +14,7 @@ import cssnano from "cssnano";
 import Assets from "gulp-asset-hash";
 import del from "del";
 import template from "gulp-template";
+import imagemin from "gulp-imagemin";
 
 // import replace from "gulp-replace";
 
@@ -24,6 +25,7 @@ const defaultArgs = ["-d", "../dist", "-s", "site"];
 gulp.task("clean", (cb) => {
   del([
     "dist",
+    "site/data/assets.json",
     "site/data/assetManifest.json",
     "site/data/manifest.json"
   ], {
@@ -31,23 +33,58 @@ gulp.task("clean", (cb) => {
   }, cb);
 });
 
-gulp.task("hugo", ["css", "js", "cms-assets"], (cb) => buildSite(cb));
+gulp.task("hugo", ["images", "css", "js", "cms-assets", "assets"], (cb) => buildSite(cb));
 gulp.task("hugo-rebuild", (cb) => buildSite(cb));
-gulp.task("hugo-preview", ["css", "js", "cms-assets"], (cb) => buildSite(cb, ["--buildDrafts", "--buildFuture"]));
-gulp.task("build", ["css", "js", "cms-assets", "hugo", "headers"]);
-gulp.task("build-preview", ["css", "js", "cms-assets", "hugo-preview", "headers"]);
+gulp.task("hugo-preview", ["images", "css", "js", "cms-assets", "assets"], (cb) => buildSite(cb, ["--buildDrafts", "--buildFuture"]));
+gulp.task("build", ["images", "css", "js", "cms-assets", "assets", "hugo", "headers"]);
+gulp.task("build-preview", ["images", "css", "js", "cms-assets", "assets", "hugo-preview", "headers"]);
 
-gulp.task("headers", ["css", "js", "cms-assets"], (cb) => {
-  var manifest = require("./site/data/manifest.json");
-  var assetManifest = require("./site/data/assetManifest.json");
+gulp.task("headers", ["css", "js", "cms-assets", "assets"], (cb) => {
+  var assets = require("./site/data/assets.json");
 
   return gulp.src("src/_headers")
     .pipe(template({
       now: (new Date()).toGMTString(),
-      manifest: manifest,
-      assetManifest: assetManifest
+      assets: assets
     }))
     .pipe(gulp.dest("dist"));
+});
+
+function string_src(filename, string) {
+  var src = require("stream").Readable({objectMode: true});
+  src._read = function() {
+    this.push(new gutil.File({
+      cwd: "",
+      base: "",
+      path: filename,
+      contents: new Buffer(string)
+    }));
+    this.push(null);
+  };
+  return src;
+}
+
+gulp.task("assets", () => {
+  var manifest = require("./site/data/manifest.json");
+  var assetManifest = require("./site/data/assetManifest.json");
+
+  var assets = {};
+  var key;
+  for (key in assetManifest) {
+    if (key.indexOf("site/static") === 0) {
+      assets[key.slice(11)] = assetManifest[key].path.slice(11);
+    }
+    if (key.indexOf("src/") === 0) {
+      assets[key.slice(3)] = assetManifest[key].path.slice(3);
+    }
+  }
+
+  for (key in manifest) {
+    assets["/" + key] = "/" + manifest[key];
+  }
+
+  return string_src("assets.json", JSON.stringify(assets))
+    .pipe(gulp.dest("site/data/"));
 });
 
 gulp.task("css", () => (
@@ -80,6 +117,19 @@ gulp.task("js", (cb) => {
     browserSync.reload();
     cb();
   });
+});
+
+gulp.task("images", () => {
+  return gulp.src("site/static/img/**/*")
+    .pipe(imagemin({
+      verbose: true
+    }))
+    .pipe(Assets.hash({
+      manifest: "site/data/assetManifest.json",
+      hashKey: "7h4e",
+      hasher: "md5"
+    }))
+    .pipe(gulp.dest("dist/img"));
 });
 
 gulp.task("svg", () => {

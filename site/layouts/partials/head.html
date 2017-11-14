@@ -2,7 +2,7 @@
 <html lang="en-US">
 	<head>
 		<title>{{ .Title }} | Troop 31, Berkley</title>
-		<link rel="stylesheet" href="/css/main-{{- (index .Site.Data.assetManifest "src/css/main.css").hash -}}.css" />
+		<link rel="stylesheet" href="{{- index .Site.Data.assets "/css/main.css" -}}" />
 
 		<meta charset="utf-8">
 		<meta http-equiv="x-ua-compatible" content="ie=edge">

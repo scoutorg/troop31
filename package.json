@@ -53,6 +53,7 @@
   "devDependencies": {
     "del": "^3.0.0",
     "gulp-asset-hash": "^1.0.1",
+    "gulp-imagemin": "^3.4.0",
     "gulp-inject": "^4.2.0",
     "gulp-svgmin": "^1.2.3",
     "gulp-svgstore": "^6.1.0",
