@@ -4,11 +4,7 @@ type: products
 page: /products.html
 image: /img/products/jumbotron.jpg
 heading: What we offer
-description: >-
-  Kaldi is the ultimate spot for coffee lovers who want to learn about their
-  java’s origin and support the farmers that grew it. We take coffee production,
-  roasting and brewing seriously and we’re glad to pass that knowledge to
-  anyone.
+description: Our troop offers a great place to learn Scout skills and values.
 intro:
   blurbs:
     - image: /img/illustrations/coffee.svg
@@ -99,5 +95,4 @@ pricing:
       plan: Custom
       price: '?'
 ---
-
 
