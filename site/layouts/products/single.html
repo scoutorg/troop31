@@ -1,7 +1,7 @@
 {{ $assets := .Site.Data.assets }}
 {{ partial "head" . }}
 {{ partial "nav" . }}
-{{ partial "jumbotron" (dict "Site" .Site "imageUrl" (index .Site.Data.assets .Params.image) "title" .Title) }}
+{{ partial "jumbotron" (dict "Site" .Site "imageUrl" .Params.image "title" .Title) }}
 
 {{ partial "4-up" (dict "Site" .Site "intro" .Params.intro) }}
 
