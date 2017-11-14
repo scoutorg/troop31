@@ -121,9 +121,7 @@ gulp.task("js", (cb) => {
 
 gulp.task("images", () => {
   return gulp.src("site/static/img/**/*")
-    .pipe(imagemin({
-      verbose: true
-    }))
+    .pipe(imagemin())
     .pipe(Assets.hash({
       manifest: "site/data/assetManifest.json",
       hashKey: "7h4e",
