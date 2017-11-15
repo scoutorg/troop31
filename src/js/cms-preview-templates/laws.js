@@ -35,7 +35,7 @@ export default class LawsPreview extends React.Component {
         {(entry.getIn(["data", "laws"]) || []).map((law, index) => <div className="center mb3 ph3" key={index}>
             <blockquote className="bg-grey-1 primary pa3 mb3 br1 b mw6 center">
                 <p className="f4 mb0">“{law.get("name")}”</p>
-                <cite className="tr db grey-3">{law.get("text")}</cite>
+                <cite className="tl db grey-3">{law.get("text")}</cite>
             </blockquote>
         </div>)}
       </div>
