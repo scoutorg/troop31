@@ -20,7 +20,7 @@ collections: # A list of collections the CMS should be able to edit
     label: "Pages"
     files:
       - file: "site/content/laws.md"
-        label: "Scout Laws"
+        label: "Scout Laws Page"
         name: "laws"
         fields:
           - {label: Title, name: title, widget: string}

@@ -1,3 +1,4 @@
+/* global Buffer */
 import gulp from "gulp";
 import cp from "child_process";
 import gutil from "gulp-util";
@@ -25,6 +26,7 @@ const defaultArgs = ["-d", "../dist", "-s", "site"];
 gulp.task("clean", (cb) => {
   del([
     "dist",
+    "src/js/assets.json",
     "site/data/assets.json",
     "site/data/assetManifest.json",
     "site/data/manifest.json"
@@ -64,9 +66,26 @@ function string_src(filename, string) {
   return src;
 }
 
-gulp.task("assets", ["images", "css", "js", "cms-assets"], () => {
-  var manifest = require("./site/data/manifest.json");
+gulp.task("prejs", ["images", "css"], () => {
   var assetManifest = require("./site/data/assetManifest.json");
+  var assets = {};
+  var key;
+  for (key in assetManifest) {
+    if (key.indexOf("site/static") === 0) {
+      assets[key.slice(11)] = assetManifest[key].path.slice(11);
+    }
+    if (key.indexOf("src/") === 0) {
+      assets[key.slice(3)] = assetManifest[key].path.slice(3);
+    }
+  }
+  return string_src("assets.json", JSON.stringify(assets))
+    .pipe(gulp.dest("src/js/"));
+
+});
+
+gulp.task("assets", ["images", "css", "js", "cms-assets"], () => {
+  var assetManifest = require("./site/data/assetManifest.json");
+  var manifest = require("./site/data/manifest.json");
 
   var assets = {};
   var key;
@@ -108,7 +127,7 @@ gulp.task("cms-assets", () => (
     .pipe(gulp.dest("./dist/css"))
 ));
 
-gulp.task("js", (cb) => {
+gulp.task("js", ["images", "css", "prejs"], (cb) => {
   const myConfig = Object.assign({}, webpackConfig);
 
   webpack(myConfig, (err, stats) => {

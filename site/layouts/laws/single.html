@@ -2,7 +2,7 @@
 {{ partial "head" . }}
 {{ partial "nav" . }}
 
-{{ partial "jumbotron" (dict "Site" .Site "imageUrl" "/img/home/jumbotron.jpg" "title" .Params.heading "subtitle" .Params.description) }}
+{{ partial "jumbotron" (dict "Site" .Site "imageUrl" .Params.image "title" .Params.heading "subtitle" .Params.description) }}
 
 <div class="pb4">
   {{ range .Params.laws }}

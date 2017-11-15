@@ -2,17 +2,17 @@
 title: The Scout Law
 type: laws
 page: /laws.html
-image: /img/products/jumbotron.jpg
+image: /img/home/jumbotron.jpg
 heading: The Scout Law
 description: The Scout Law consists of twelve points intended to guide the behavior and decisions of scouts and scouters.
 laws:
   - name: Trustworthy
     text: >
-      A Scout tells the truth. He keeps his promises. Honests is part of his
+      A Scout tells the truth. He keeps his promises. Honesty is part of his
       code of conduct. People can depend on him.
   - name: Loyal
     text: >
-      A Scout is true to his familt, Scout leaders, friends, school, and nation.
+      A Scout is true to his family, Scout leaders, friends, school, and nation.
   - name: Helpful
     text: >
       A Scout is concerned about other people. He does things willingly for others
@@ -36,7 +36,7 @@ laws:
       his way. He tries to make others happy.
   - name: Thrifty
     text: >
-      A Scout works to pay his way and to help others. He saves for unforseen needs.
+      A Scout works to pay his way and to help others. He saves for unforeseen needs.
       He protects and conserves natural resources. He carefully uses time and property.
   - name: Brave
     text: >
@@ -52,4 +52,3 @@ laws:
       A Scout is reverent toward God. He is faithful in his religious duties. He
       respects the beliefs of others.
 ---
-

@@ -1,14 +1,14 @@
 import React from "react";
-import format from "date-fns/format";
+import Assets from "../assets";
 
 export default class LawsPreview extends React.Component {
   render() {
-    const {entry, getAsset, widgetFor} = this.props;
+    const {entry, getAsset} = this.props;
     let image = getAsset(entry.getIn(["data", "image"]));
 
     // Bit of a nasty hack to make relative paths work as expected as a background image here
     if (image && !image.fileObj) {
-      image = window.parent.location.protocol + "//" + window.parent.location.host + image;
+      image = window.parent.location.protocol + "//" + window.parent.location.host + Assets.assetPath(image);
     }
 
     return <div>
@@ -23,6 +23,9 @@ export default class LawsPreview extends React.Component {
               </h1>
             </div>
             <div className="mw7 relative bg-fix-primary">
+              <p className="b f4 di lh-title mb3 white mw6 bg-primary">
+                { entry.getIn(["data", "description"]) }
+              </p>
             </div>
           </div>
         </div>
