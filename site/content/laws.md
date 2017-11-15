@@ -52,3 +52,4 @@ laws:
       A Scout is reverent toward God. He is faithful in his religious duties. He
       respects the beliefs of others.
 ---
+
