@@ -5,11 +5,11 @@
 
 <div class="mw7 center">
   <ul class="flex-ns flex-wrap mhn1-ns pa3">
-      {{ range .Data.Pages }}
-          <div class="w-50-ns ph1-ns flex">
-            {{ .Render "li"}}
-          </div>
-      {{ end }}
+  {{ range .Data.Pages }}
+    <li class="w-50-ns ph1-ns flex">
+      {{ .Render "li" }}
+    </li>
+  {{ end }}
   </ul>
 </div>
 
