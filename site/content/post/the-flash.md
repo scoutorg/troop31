@@ -5,3 +5,5 @@ description: Everyone wants to watch the flash tonight.
 image: /img/The_Flash_title_card.png
 ---
 Well we saw it and now it's time to get back to work.
+
+Time has passed and now it is too late.
