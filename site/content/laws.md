@@ -9,7 +9,7 @@ laws:
   - name: Trustworthy
     text: >
       A Scout tells the truth. He keeps his promises. Honesty is part of his
-      code of conduct. People can depend on him.
+      code of conduct. People can always depend on him.
   - name: Loyal
     text: >
       A Scout is true to his family, Scout leaders, friends, school, and nation.
